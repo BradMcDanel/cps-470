@@ -1,14 +1,6 @@
-# Miniforge Installation Guide
+# Installation Guide
 
-This guide covers installing Miniforge on your personal machine to match the lab environment.
-
-## What is Miniforge?
-
-Miniforge is a minimal conda installer that includes both `conda` and `mamba` commands. It uses conda-forge by default and avoids Anaconda licensing issues.
-
-## Installation
-
-### Download Miniforge
+## Download Miniforge
 
 Visit: https://github.com/conda-forge/miniforge/releases/latest
 
@@ -35,7 +27,7 @@ bash Miniforge3-MacOSX-arm64.sh
 **Windows:**
 Download and run: https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Windows-x86_64.exe
 
-### Configuration
+## Configuration
 
 After installation, initialize your shell:
 
