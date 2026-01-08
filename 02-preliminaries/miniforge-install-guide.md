@@ -62,8 +62,6 @@ After installation, create the course environment:
 mamba env create -f environment.yml
 ```
 
-This creates a `cps470` environment with Python 3.11, PyTorch, NumPy, Matplotlib, and IPython. The environment will automatically detect and use GPUs when available (lab machines) or run on CPU (personal laptops).
-
 **Activate the environment:**
 ```bash
 conda activate cps470
