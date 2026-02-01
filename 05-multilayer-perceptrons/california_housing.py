@@ -22,9 +22,6 @@ if __name__ == "__main__":
     # Checkpoint A: Normalize the features
     # =========================================================================
     # Standardize each feature to mean 0, standard deviation 1.
-    # X = (X - mean) / std
-    #
-    # Hint: X.mean(dim=0) and X.std(dim=0) give per-feature statistics
 
     # TODO: normalize X
 
@@ -36,30 +33,25 @@ if __name__ == "__main__":
     # =========================================================================
     # Checkpoint B: Build and train a single hidden layer MLP
     # =========================================================================
-    # Use nn.Sequential to build: Linear(8, 64) -> ReLU -> Linear(64, 1)
-    # Loss: nn.MSELoss()
-    # Optimizer: torch.optim.SGD(model.parameters(), lr=0.02)
-    # Train for 100 epochs (full-batch, no DataLoader needed)
+    # Build an MLP with one hidden layer using nn.Sequential.
+    # Use nn.MSELoss and torch.optim.SGD. Train for 100 epochs.
+    # Print the loss every 20 epochs.
 
-    # TODO: define model
+    # TODO: define model, loss function, and optimizer
     model = None
-
-    # TODO: define loss function and optimizer
     loss_fn = None
     optimizer = None
 
     # TODO: training loop
-    # for epoch in range(100):
-    #     1. forward pass: y_hat = model(X)
-    #     2. compute loss: loss = loss_fn(y_hat, y)
-    #     3. backward: optimizer.zero_grad(), loss.backward(), optimizer.step()
-    #     4. print loss every 20 epochs
+    for epoch in range(100):
+        # TODO: forward pass and compute loss
+        # TODO: zero gradients, backward pass, optimizer step
+        pass  # replace this
 
+    # final loss after training (no_grad disables gradient tracking)
     print("Checkpoint B:")
     with torch.no_grad():
-        y_hat = model(X)
-        mse = loss_fn(y_hat, y)
-        print(f"  Training MSE: {mse.item():.4f}")
+        print(f"  Training MSE: {loss_fn(model(X), y).item():.4f}")
     print()
 
     # =========================================================================
