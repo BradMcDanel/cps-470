@@ -57,8 +57,22 @@ if __name__ == "__main__":
     #   acc = (preds == labels).float().mean()
 
     # TODO: define model, loss function, and optimizer
+    model = nn.Sequential(
+        nn.Linear(54, 128),
+        nn.ReLU(),
+        nn.Linear(128, 7)
+    )
+
+    loss_fn = nn.CrossEntropyLoss()
+    optim = torch.optim.Adam(model.parameters(), lr=0.001)
 
     # TODO: training loop
+    for epoch in range(200):
+        preds = model(X_train)
+        optim.zero_grad()
+        loss = loss_fn(preds, y_train)
+        loss.backward()
+        optim.step()
 
     print("Checkpoint A:")
     with torch.no_grad():
@@ -71,40 +85,63 @@ if __name__ == "__main__":
     # =========================================================================
     # Checkpoint B: Overfit on purpose
     # =========================================================================
-    # Build a much larger model (3 hidden layers, 256 neurons each).
-    # Architecture: 54 -> 256 -> 256 -> 256 -> 7
-    # Train for 300 epochs. Track train and test loss each epoch.
-    # Print final train vs. test accuracy. You should see overfitting.
+    model = nn.Sequential(
+        nn.Linear(54, 256),
+        nn.ReLU(),
+        nn.Linear(256, 256),
+        nn.ReLU(),
+        nn.Linear(256, 256),
+        nn.ReLU(),
+        nn.Linear(256, 7)
+    )
 
-    # TODO: define oversized model, loss function, and optimizer
+    loss_fn = nn.CrossEntropyLoss()
+    optim = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    # TODO: training loop (store train_losses and test_losses lists)
+    for epoch in range(500):
+        preds = model(X_train)
+        optim.zero_grad()
+        loss = loss_fn(preds, y_train)
+        loss.backward()
+        optim.step()
 
-    print("Checkpoint B:")
-    with torch.no_grad():
-        train_acc = (model(X_train).argmax(dim=1) == y_train).float().mean()
-        test_acc = (model(X_test).argmax(dim=1) == y_test).float().mean()
-        print(f"  Train accuracy: {train_acc:.2%}")
-        print(f"  Test accuracy:  {test_acc:.2%}")
-    print()
+        if epoch % 50 == 0:
+            print("Epoch:", epoch)
+            with torch.no_grad():
+                train_acc = (model(X_train).argmax(dim=1) == y_train).float().mean()
+                test_acc = (model(X_test).argmax(dim=1) == y_test).float().mean()
+                print(f"  Train accuracy: {train_acc:.2%}")
+                print(f"  Test accuracy:  {test_acc:.2%}")
+            print()
 
-    # =========================================================================
-    # Checkpoint C: Add dropout
-    # =========================================================================
-    # Rebuild the oversized model with nn.Dropout(0.3) after each ReLU.
-    # Train the same way (300 epochs). Compare test accuracy to Checkpoint B.
-    # Dropout should reduce overfitting and improve generalization.
-    #
-    # Remember: model.train() before training, model.eval() before evaluation.
+    model = nn.Sequential(
+        nn.Linear(54, 256),
+        nn.ReLU(),
+        nn.Dropout(0.8),
+        nn.Linear(256, 256),
+        nn.ReLU(),
+        nn.Dropout(0.8),
+        nn.Linear(256, 256),
+        nn.ReLU(),
+        nn.Dropout(0.8),
+        nn.Linear(256, 7)
+    )
 
-    # TODO: define model with dropout, loss function, and optimizer
+    loss_fn = nn.CrossEntropyLoss()
+    optim = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    # TODO: training loop
+    for epoch in range(500):
+        preds = model(X_train)
+        optim.zero_grad()
+        loss = loss_fn(preds, y_train)
+        loss.backward()
+        optim.step()
 
-    print("Checkpoint C:")
-    with torch.no_grad():
-        model.eval()
-        train_acc = (model(X_train).argmax(dim=1) == y_train).float().mean()
-        test_acc = (model(X_test).argmax(dim=1) == y_test).float().mean()
-        print(f"  Train accuracy: {train_acc:.2%}")
-        print(f"  Test accuracy:  {test_acc:.2%}")
+        if epoch % 50 == 0:
+            print("Epoch:", epoch)
+            with torch.no_grad():
+                train_acc = (model(X_train).argmax(dim=1) == y_train).float().mean()
+                test_acc = (model(X_test).argmax(dim=1) == y_test).float().mean()
+                print(f"  Train accuracy: {train_acc:.2%}")
+                print(f"  Test accuracy:  {test_acc:.2%}")
+            print()

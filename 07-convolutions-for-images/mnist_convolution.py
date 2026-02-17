@@ -29,8 +29,8 @@ def my_conv2d(image, kernel):
     out_w = W - K + 1
     out = torch.zeros((out_h, out_w), dtype=image.dtype)
 
-    # TODO: implement nested-loop convolution (no F.conv2d)
-    # For simplicity, we assume no padding or striding for now.
+    out[0, 0] = image[0, 0] * kernel[0, 0] + ... + 
+    out[0, 1] = image[0, 1] * kernel[0, 0] + ... + 
 
     return out
 
